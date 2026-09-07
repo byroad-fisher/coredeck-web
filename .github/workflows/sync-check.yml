@@ -1,0 +1,33 @@
+name: Verify MedVenture sync
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out coreDECK Web
+        uses: actions/checkout@v4
+        with:
+          path: coredeck-web
+      - name: Check out MedVenture
+        uses: actions/checkout@v4
+        with:
+          repository: byroad-fisher/medventure
+          path: MedVenture
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: coredeck-web/package-lock.json
+      - run: npm ci
+        working-directory: coredeck-web
+      - name: Confirm committed data is a deterministic MedVenture projection
+        run: npm run check:sync
+        working-directory: coredeck-web
+        env:
+          MEDVENTURE_ROOT: ../MedVenture
