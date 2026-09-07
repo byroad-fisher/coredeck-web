@@ -50,7 +50,7 @@ npm run build
 
 ## Deployment
 
-`main` is tested and deployed to GitHub Pages by `.github/workflows/pages.yml`. The production build uses `/coredeck-web` as its Pages base path; local and Sites builds remain rooted at `/`.
+`main` is tested and deployed to GitHub Pages by `.github/workflows/pages.yml`. The production build uses `/coredeck-web` as its Pages base path and then normalises vinext's nested asset output for GitHub's project-site routing; local and Sites builds remain rooted at `/`.
 
 The application is a static PWA. Study bookmarks and recall confidence are device-local and are never sent to a server.
 
